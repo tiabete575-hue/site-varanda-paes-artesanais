@@ -5,11 +5,15 @@ export interface MenuItem {
   image?: string;
 }
 
+export type CropPosition = "top-left" | "top-right" | "bottom-left" | "bottom-right";
+export interface MenuImage { src: string; position: CropPosition }
+
 export interface MenuSection {
   id: string;
   title: string;
   intro?: string;
   categoryImage?: string;
+  itemImages?: Record<string, MenuImage>;
   items: MenuItem[];
 }
 
@@ -25,12 +29,60 @@ const imgSnack = "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkHxsDWvcJyc7W
 const imgBuffet = "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmPp_nvgA7qEhNuLWo88tyauKqPJzEW7XDGt2YYPKmZhcriF-fcJwj2v2SjCTlFCx0SUoZvZzLg9nCUV8QlDJGD0L6cnF1_DWAxw2CSt1GwGK7_ezpgToZ3rBmm0Ca678IpQRjl=s900";
 const imgSweets = "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlsHNnZyuMKg2RNn_PCFngpmLWqJJvmIfY6TuHq-JxfVfbH5xYiaMeR_UpPQlt49NuDdHccaDrAc28irc-la88_FuzEhRL6L5Jz_mdXVJ6bXXBlZ7sW6fUqxFcCZCXohSfPkshaT6VSGKEZ=s900";
 
+const sheet = (name: string) => `/menu/item-sheets/${name}.png`;
+const positions: CropPosition[] = ["top-left", "top-right", "bottom-left", "bottom-right"];
+const imageAt = (src: string, name: string, position: CropPosition): Record<string, MenuImage> => ({ [name]: { src, position } });
+const imageGrid = (src: string, names: string[]) => Object.fromEntries(names.map((name, index) => [name, { src, position: positions[index % 4]! }]));
+const mergeImages = (...groups: Record<string, MenuImage>[]) => Object.assign({}, ...groups);
+
+const destaqueImages = mergeImages(
+  imageGrid(sheet("destaques-1"), ["Café da Manhã", "Chocolate Quente", "Calzone", "Mini Torta Naked"]),
+  imageGrid(sheet("destaques-2"), ["Cappuccino Tradicional", "Café Expresso", "Quiche", "Sanduíche do Gilson"]),
+  imageGrid(sheet("destaques-3"), ["Bruschetta de Marguerita Gourmet", "Bruschetta 4 Queijos", "Sopa de Abóbora com Carne", "Buffet Self-Service"]),
+  imageGrid(sheet("destaques-4"), ["Macaron"]),
+);
+const crepeSalgadoImages = mergeImages(
+  imageGrid(sheet("crepes-1"), ["Paris", "Napolitano", "Light", "Italianíssimo"]),
+  imageGrid(sheet("crepes-2"), ["Marguerita", "Calabresa", "Três Queijos", "Frango"]),
+  imageGrid(sheet("crepes-3"), ["Lagarto", "Carne Seca"]),
+);
+const caldoImages = mergeImages(
+  imageAt(sheet("crepes-3"), "Tradicionais · 500 ml", "bottom-left"),
+  imageAt(sheet("crepes-3"), "Especiais · 500 ml", "bottom-right"),
+);
+const crepeDoceImages = mergeImages(
+  imageGrid(sheet("doces-1"), ["Banana Tradicional", "Banana com Chocolate", "Chocolate com Morango", "Ricardo (Cartola)"]),
+  imageGrid(sheet("doces-2"), ["Morango com Nutella", "Da Francisca", "Doce de Leite com Sorvete", "Ingredientes Extras"]),
+);
+const tradicionalImages = mergeImages(
+  imageGrid(sheet("tradicionais-1"), ["Alho", "Calabresa", "Frango com Catupiry e Milho", "Frango com Catupiry"]),
+  imageAt(sheet("gourmet-1"), "Marguerita", "top-left"),
+  imageAt(sheet("tradicionais-1"), "Milho", "bottom-left"),
+  imageAt(sheet("gourmet-2"), "Mussarela", "bottom-left"),
+  imageAt(sheet("gourmet-2"), "Napolitana", "top-right"),
+  imageAt(sheet("gourmet-2"), "Portuguesa", "top-right"),
+  imageAt(sheet("gourmet-2"), "Presunto", "top-right"),
+);
+const gourmetImages = mergeImages(
+  imageGrid(sheet("gourmet-1"), ["Marguerita Gourmet", "Palmito", "Parmegiana", "Pepperoni"]),
+  imageGrid(sheet("gourmet-2"), ["À Italiana", "Portuguesa Light", "Quatro Queijos", "Tomate Seco com Rúcula"]),
+  imageGrid(sheet("gourmet-3"), ["Do Chef Paulo", "Alcachofra", "Alicci", "Burrata com Parma"]),
+  imageGrid(sheet("gourmet-4"), ["Calabresa ao Vinho", "Italianíssima", "Las Vegas (Chef Gino Contin)", "Parma"]),
+  imageGrid(sheet("gourmet-5"), ["Parma e Pomodoro", "Queijo Brie com Parma", "Shimeji"]),
+);
+const especialImages = mergeImages(
+  imageGrid(sheet("especiais-1"), ["Atum", "Australiana", "Bacon", "Calabresa com Bacon"]),
+  imageGrid(sheet("especiais-2"), ["Caprese", "Carne Seca", "Francesa", "Gorgonzola com Pera"]),
+  imageGrid(sheet("especiais-3"), ["Lombo", "Macariço"]),
+);
+
 export const menu: MenuSection[] = [
   {
     id: "destaques",
     title: "Destaques da casa",
     intro: "Itens destacados no perfil da Pães e Vinhos no Google.",
     categoryImage: imgSnack,
+    itemImages: destaqueImages,
     items: [
       { name: "Café da Manhã", description: "Um dos mais pedidos da casa.", prices: consulta, image: imgCafe },
       { name: "Chocolate Quente", description: "Um dos mais pedidos da casa.", prices: consulta, image: imgChocolate },
@@ -51,6 +103,7 @@ export const menu: MenuSection[] = [
     id: "crepes",
     title: "Crepes salgados",
     categoryImage: "/menu/crepe-salgado.png",
+    itemImages: crepeSalgadoImages,
     items: [
       { name: "Paris", description: "Presunto e mussarela.", prices: unico("R$ 34,99") },
       { name: "Napolitano", description: "Presunto, mussarela, tomate e orégano.", prices: unico("R$ 38,99") },
@@ -69,6 +122,7 @@ export const menu: MenuSection[] = [
     title: "Caldos e sopas",
     intro: "Sabores sujeitos à disponibilidade do dia.",
     categoryImage: "/menu/caldo-sopas.png",
+    itemImages: caldoImages,
     items: [
       { name: "Tradicionais · 500 ml", description: "Canja, frango com mandioca, feijão, caldo verde, carne moída com mandioca, frango com milho, legumes, lentilha, carne seca com abóbora ou vaca atolada.", prices: unico("R$ 25,99") },
       { name: "Especiais · 500 ml", description: "Parisiense, batata-baroa, minestrone ou yakissoba.", prices: unico("R$ 28,99") },
@@ -78,6 +132,7 @@ export const menu: MenuSection[] = [
     id: "crepes-doces",
     title: "Crepes doces",
     categoryImage: "/menu/crepe-doce.png",
+    itemImages: crepeDoceImages,
     items: [
       { name: "Banana Tradicional", description: "Banana, mussarela, açúcar e canela.", prices: unico("R$ 37,99") },
       { name: "Banana com Chocolate", description: "Banana e chocolate.", prices: unico("R$ 38,99") },
@@ -94,6 +149,7 @@ export const menu: MenuSection[] = [
     title: "Pizzas tradicionais",
     intro: "O Google não informa os preços destas pizzas; consulte a casa.",
     categoryImage: "/menu/pizza-tradicional.png",
+    itemImages: tradicionalImages,
     items: [
       { name: "Alho", description: "Pomodoro pelati, mussarela, rodelas de tomate, azeitona preta, alho torrado e orégano.", prices: consulta },
       { name: "Calabresa", description: "Pomodoro pelati, mussarela, calabresa, cebola, azeitona preta e orégano.", prices: consulta },
@@ -112,6 +168,7 @@ export const menu: MenuSection[] = [
     title: "Pizzas gourmet",
     intro: "O Google não informa os preços destas pizzas; consulte a casa.",
     categoryImage: "/menu/pizza-gourmet.png",
+    itemImages: gourmetImages,
     items: [
       { name: "Marguerita Gourmet", description: "Pomodoro pelati, mussarela de búfala, tomate-cereja, parmesão ralado e manjericão.", prices: consulta },
       { name: "Palmito", description: "Pomodoro pelati, mussarela, palmito e orégano.", prices: consulta },
@@ -139,6 +196,7 @@ export const menu: MenuSection[] = [
     title: "Pizzas especiais",
     intro: "O Google não informa os preços destas pizzas; consulte a casa.",
     categoryImage: "/menu/pizza-especial.png",
+    itemImages: especialImages,
     items: [
       { name: "Atum", description: "Pomodoro pelati, mussarela, atum, azeitona preta, cebola e orégano.", prices: consulta },
       { name: "Australiana", description: "Pomodoro pelati, mussarela, calabresa, frango desfiado, milho, catupiry e orégano.", prices: consulta },

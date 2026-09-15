@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import { menu, contato, type MenuItem } from "@/data/menu";
+import { menu, contato, type MenuItem, type MenuImage } from "@/data/menu";
 
 const banner = "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkHxsDWvcJyc7Wie8rni80qwTmfRETGP35F5y3rUeoyPEriVOvsHup6yzCeor1TI15RM_MPeE9Olcow8Nun8N5hvNQeB1OIZcfP0aD4eIGS--jMUnqq4yl8lCUirCb5ZpDpm73r=s1200";
 
@@ -13,11 +13,19 @@ export const Route = createFileRoute("/cardapio")({
   component: Cardapio,
 });
 
-function Item({ item, fallbackImage }: { item: MenuItem; fallbackImage?: string | undefined }) {
-  const image = item.image ?? fallbackImage;
+const cropTransforms: Record<MenuImage["position"], string> = {
+  "top-left": "translate(0, -12.5%)",
+  "top-right": "translate(-50%, -12.5%)",
+  "bottom-left": "translate(0, -62.5%)",
+  "bottom-right": "translate(-50%, -62.5%)",
+};
+
+function Item({ item, fallbackImage, itemImage }: { item: MenuItem; fallbackImage?: string | undefined; itemImage?: MenuImage | undefined }) {
+  const image = itemImage?.src ?? item.image ?? fallbackImage;
+  const isSpecific = Boolean(itemImage);
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-[0_12px_35px_-30px_oklch(0.25_0.05_20)] transition hover:-translate-y-1 hover:shadow-lg">
-      {image && <div className="relative overflow-hidden"><img src={image} alt={item.name} loading="lazy" className="h-48 w-full object-cover transition duration-500 group-hover:scale-[1.03]" />{!item.image && <span className="absolute bottom-2 right-2 rounded-full bg-black/60 px-2.5 py-1 text-[0.68rem] font-medium text-white backdrop-blur">Imagem ilustrativa</span>}</div>}
+      {image && <div className="relative h-48 overflow-hidden"><img src={image} alt={`${item.name} — foto do produto`} loading="lazy" className={isSpecific ? "absolute left-0 top-0 h-auto w-[200%] max-w-none transition duration-500 group-hover:scale-[1.03]" : "h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"} style={isSpecific ? { transform: cropTransforms[itemImage!.position] } : undefined} />{!isSpecific && !item.image && <span className="absolute bottom-2 right-2 rounded-full bg-black/60 px-2.5 py-1 text-[0.68rem] font-medium text-white backdrop-blur">Imagem ilustrativa</span>}</div>}
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-start justify-between gap-4">
           <h3 className="font-display text-2xl font-semibold leading-tight">{item.name}</h3>
@@ -70,7 +78,7 @@ function Cardapio() {
               <h2 className="font-display text-4xl font-semibold text-primary">{section.title}</h2>
               {section.intro && <p className="mt-2 text-sm text-muted-foreground">{section.intro}</p>}
             </div>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{section.items.map((item) => <Item key={`${section.id}-${item.name}`} item={item} fallbackImage={section.categoryImage} />)}</div>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{section.items.map((item) => <Item key={`${section.id}-${item.name}`} item={item} fallbackImage={section.categoryImage} itemImage={section.itemImages?.[item.name]} />)}</div>
           </section>
         ))}
         {sections.length === 0 && <div className="rounded-xl border border-dashed border-border p-12 text-center text-muted-foreground">Nenhum item encontrado para “{search}”.</div>}
