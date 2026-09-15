@@ -1,90 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MapPin, Phone, Clock, Instagram, Facebook } from "lucide-react";
+import { Clock3, Instagram, MapPin, Phone } from "lucide-react";
 import { contato } from "@/data/menu";
 
 export const Route = createFileRoute("/contato")({
-  head: () => ({
-    meta: [
-      { title: "Contato e Endereço | Parentela Casa de Pães — Asa Sul, Brasília" },
-      {
-        name: "description",
-        content:
-          "Endereço, telefone e horários da Parentela Casa de Pães na Asa Sul, Brasília. Aberto todos os dias até às 22h.",
-      },
-      { property: "og:title", content: "Contato — Parentela Casa de Pães" },
-      {
-        property: "og:description",
-        content: "Asa Sul, Brasília. Telefone (61) 3273-0219. Aberto todos os dias até 22h.",
-      },
-    ],
-  }),
+  head: () => ({ meta: [
+    { title: "Contato e Horários | Pães e Vinhos Padaria" },
+    { name: "description", content: "Endereço, telefone, horário e rota para a Pães e Vinhos Padaria, na CLSW 103, Sudoeste, Brasília." },
+  ] }),
   component: Contato,
 });
 
 function Contato() {
   return (
-    <div className="mx-auto max-w-6xl px-5 py-16">
-      <h1 className="font-display text-4xl md:text-5xl">Contato</h1>
-      <p className="mt-4 max-w-xl text-muted-foreground">
-        Estamos na Asa Sul, em Brasília. Ligue para reservas e encomendas ou venha tomar um
-        café com a gente.
-      </p>
-
-      <div className="mt-12 grid gap-10 md:grid-cols-2">
-        <div className="space-y-6">
-          <div className="flex gap-4">
-            <MapPin className="mt-1 size-5 shrink-0 text-primary" />
-            <div>
-              <h2 className="font-display text-xl">Endereço</h2>
-              <p className="text-muted-foreground">{contato.endereco}</p>
-            </div>
-          </div>
-          <div className="flex gap-4">
-            <Phone className="mt-1 size-5 shrink-0 text-primary" />
-            <div>
-              <h2 className="font-display text-xl">Telefone</h2>
-              <a href={contato.telefoneLink} className="text-muted-foreground hover:text-primary">
-                {contato.telefone}
-              </a>
-            </div>
-          </div>
-          <div className="flex gap-4">
-            <Clock className="mt-1 size-5 shrink-0 text-primary" />
-            <div>
-              <h2 className="font-display text-xl">Horário</h2>
-              <p className="text-muted-foreground">{contato.horario}</p>
-            </div>
-          </div>
-          <div className="flex gap-4 pt-2">
-            <a
-              href={contato.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm hover:border-primary hover:text-primary"
-            >
-              <Instagram className="size-4" /> Instagram
-            </a>
-            <a
-              href={contato.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm hover:border-primary hover:text-primary"
-            >
-              <Facebook className="size-4" /> Facebook
-            </a>
-          </div>
-        </div>
-
-        <div className="overflow-hidden rounded-2xl border border-border">
-          <iframe
-            title="Mapa da Parentela Casa de Pães na Asa Sul"
-            src="https://www.google.com/maps?q=Parentela+Casa+de+P%C3%A3es+Asa+Sul+Bras%C3%ADlia&output=embed"
-            className="h-[380px] w-full"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </div>
-      </div>
-    </div>
+    <>
+      <section className="bg-primary py-20 text-primary-foreground"><div className="mx-auto max-w-6xl px-5"><p className="text-sm font-semibold uppercase tracking-[0.25em] text-accent">Fale com a casa</p><h1 className="mt-4 font-display text-5xl font-semibold md:text-6xl">Contato e horários</h1><p className="mt-4 max-w-xl text-primary-foreground/75">Passe para um café, almoço, lanche ou pizza. A Pães e Vinhos abre todos os dias no Sudoeste.</p></div></section>
+      <section className="mx-auto grid max-w-6xl gap-12 px-5 py-20 md:grid-cols-[1.15fr_0.85fr]">
+        <div className="rounded-2xl bg-secondary p-8 md:p-12"><h2 className="font-display text-4xl font-semibold">Pães e Vinhos Padaria</h2><div className="mt-8 space-y-7">
+          <div className="flex gap-4"><MapPin className="mt-1 size-5 shrink-0 text-primary" /><div><strong className="block">Endereço</strong><p className="mt-1 leading-relaxed text-muted-foreground">{contato.endereco}</p><a href={contato.mapa} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block font-semibold text-primary hover:underline">Abrir rota no Google Maps</a></div></div>
+          <div className="flex gap-4"><Clock3 className="mt-1 size-5 shrink-0 text-primary" /><div><strong className="block">Horário</strong><p className="mt-1 text-muted-foreground">{contato.horario}</p><p className="mt-1 text-xs text-muted-foreground">O Google pode exibir fechamento às 23h30 em alguns dias. Confirme em feriados.</p></div></div>
+          <div className="flex gap-4"><Phone className="mt-1 size-5 shrink-0 text-primary" /><div><strong className="block">Telefone</strong><a href={contato.telefoneLink} className="mt-1 block text-muted-foreground hover:text-primary">{contato.telefone}</a></div></div>
+          <div className="flex gap-4"><Instagram className="mt-1 size-5 shrink-0 text-primary" /><div><strong className="block">Instagram</strong><a href={contato.instagram} target="_blank" rel="noopener noreferrer" className="mt-1 block text-muted-foreground hover:text-primary">@paesevinhospadaria</a></div></div>
+        </div></div>
+        <div className="flex flex-col justify-center"><p className="text-sm font-semibold uppercase tracking-[0.25em] text-primary">Antes de sair de casa</p><h2 className="mt-4 font-display text-4xl font-semibold">Quer confirmar um item?</h2><p className="mt-5 leading-relaxed text-muted-foreground">Ligue para consultar disponibilidade, preços atualizados, tamanhos de pizza, encomendas e atendimento em feriados.</p><a href={contato.telefoneLink} className="mt-7 inline-flex w-fit rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground">Ligar agora</a><a href={contato.instagram} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex w-fit rounded-full border border-primary/30 px-6 py-3 font-semibold text-primary">Abrir Instagram</a></div>
+      </section>
+    </>
   );
 }

@@ -1,70 +1,17 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Facebook, Phone, MapPin, Clock } from "lucide-react";
+import { Clock3, Instagram, MapPin, Phone } from "lucide-react";
 import { contato } from "@/data/menu";
 import { Logo } from "@/components/site/Logo";
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-border/60 bg-secondary">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-3">
-        <div>
-          <Logo variant="horizontal" size="sm" />
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-            Pães especiais, cozinha afetiva e o aconchego de um casarão mineiro no coração
-            de Brasília.
-          </p>
-        </div>
-
-        <div className="space-y-3 text-sm text-foreground/80">
-          <p className="flex items-center gap-2">
-            <MapPin className="size-4 text-primary" /> {contato.endereco}
-          </p>
-          <p className="flex items-center gap-2">
-            <Phone className="size-4 text-primary" />
-            <a href={contato.telefoneLink} className="hover:text-primary">
-              {contato.telefone}
-            </a>
-          </p>
-          <p className="flex items-center gap-2">
-            <Clock className="size-4 text-primary" /> {contato.horario}
-          </p>
-        </div>
-
-        <div className="space-y-3 text-sm">
-          <Link to="/cardapio" className="block text-foreground/80 hover:text-primary">
-            Cardápio
-          </Link>
-          <Link to="/sobre" className="block text-foreground/80 hover:text-primary">
-            A Casa
-          </Link>
-          <Link to="/contato" className="block text-foreground/80 hover:text-primary">
-            Contato
-          </Link>
-          <div className="flex gap-4 pt-2">
-            <a
-              href={contato.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram da Parentela"
-              className="text-primary hover:opacity-70"
-            >
-              <Instagram className="size-5" />
-            </a>
-            <a
-              href={contato.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook da Parentela"
-              className="text-primary hover:opacity-70"
-            >
-              <Facebook className="size-5" />
-            </a>
-          </div>
-        </div>
+    <footer className="mt-auto border-t border-border bg-[oklch(0.22_0.055_20)] text-primary-foreground">
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.1fr_1fr_0.6fr]">
+        <div><Logo variant="horizontal" size="sm" className="[&_span]:!text-white" /><p className="mt-5 max-w-sm text-sm leading-relaxed text-primary-foreground/65">Pães artesanais, matinais, refeições caseiras, crepes, caldos, pizzaria e vinhos no Sudoeste, Brasília.</p></div>
+        <div className="space-y-4 text-sm text-primary-foreground/75"><p className="flex items-start gap-3"><MapPin className="mt-0.5 size-4 shrink-0 text-accent" /><span>{contato.endereco}</span></p><p className="flex items-center gap-3"><Clock3 className="size-4 text-accent" />{contato.horario}</p><p className="flex items-center gap-3"><Phone className="size-4 text-accent" /><a href={contato.telefoneLink} className="hover:text-white">{contato.telefone}</a></p></div>
+        <nav className="space-y-3 text-sm"><Link to="/cardapio" className="block hover:text-accent">Cardápio</Link><Link to="/sobre" className="block hover:text-accent">A Padaria</Link><Link to="/contato" className="block hover:text-accent">Contato</Link><a href={contato.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 pt-2 text-accent"><Instagram className="size-5" /> Instagram</a></nav>
       </div>
-      <div className="border-t border-border/60 py-5 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Parentela Casa de Pães — Brasília, DF
-      </div>
+      <div className="border-t border-white/10 py-5 text-center text-xs text-primary-foreground/45">© {new Date().getFullYear()} Pães e Vinhos Padaria — Brasília, DF</div>
     </footer>
   );
 }

@@ -7,7 +7,7 @@ import { Logo } from "@/components/site/Logo";
 const links = [
   { to: "/", label: "Início" },
   { to: "/cardapio", label: "Cardápio" },
-  { to: "/sobre", label: "A Casa" },
+  { to: "/sobre", label: "A Padaria" },
   { to: "/contato", label: "Contato" },
 ] as const;
 
@@ -39,7 +39,7 @@ export function Header() {
             rel="noopener noreferrer"
             className="rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Pedir online
+            Falar no Instagram
           </a>
         </nav>
 
@@ -74,7 +74,7 @@ export function Header() {
                 rel="noopener noreferrer"
                 className="text-sm uppercase tracking-[0.15em] text-primary"
               >
-                Pedir online
+                Falar no Instagram
               </a>
             </li>
           </ul>
