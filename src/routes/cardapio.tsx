@@ -3,12 +3,12 @@ import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import { menu, contato, type MenuItem, type MenuImage } from "@/data/menu";
 
-const banner = "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkHxsDWvcJyc7Wie8rni80qwTmfRETGP35F5y3rUeoyPEriVOvsHup6yzCeor1TI15RM_MPeE9Olcow8Nun8N5hvNQeB1OIZcfP0aD4eIGS--jMUnqq4yl8lCUirCb5ZpDpm73r=s1200";
+const banner = "/menu/paes-fermentacao.jpg";
 
 export const Route = createFileRoute("/cardapio")({
   head: () => ({ meta: [
-    { title: "Cardápio | Pães e Vinhos Padaria" },
-    { name: "description", content: "Cardápio da Pães e Vinhos: crepes, caldos, sopas, pizzas tradicionais, especiais e gourmet no Sudoeste, Brasília." },
+    { title: "Cardápio | Varanda Pães Artesanais" },
+    { name: "description", content: "Cardápio da Varanda Pães Artesanais: pães de fermentação natural, folhados, queijos artesanais, geleias, doces e empório na Asa Norte, Brasília." },
   ] }),
   component: Cardapio,
 });
@@ -24,8 +24,8 @@ function Item({ item, fallbackImage, itemImage }: { item: MenuItem; fallbackImag
   const image = itemImage?.src ?? item.image ?? fallbackImage;
   const isSpecific = Boolean(itemImage);
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-[0_12px_35px_-30px_oklch(0.25_0.05_20)] transition hover:-translate-y-1 hover:shadow-lg">
-      {image && <div className="relative h-48 overflow-hidden"><img src={image} alt={`${item.name} — foto do produto`} loading="lazy" className={isSpecific ? "absolute left-0 top-0 h-auto w-[200%] max-w-none transition duration-500 group-hover:scale-[1.03]" : "h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"} style={isSpecific ? { transform: cropTransforms[itemImage!.position] } : undefined} />{!isSpecific && !item.image && <span className="absolute bottom-2 right-2 rounded-full bg-black/60 px-2.5 py-1 text-[0.68rem] font-medium text-white backdrop-blur">Imagem ilustrativa</span>}</div>}
+    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-[0_12px_35px_-30px_oklch(0.25_0.05_38)] transition hover:-translate-y-1 hover:shadow-lg">
+      {image && <div className="relative h-48 overflow-hidden"><img src={image} alt={`${item.name} — foto do produto`} loading="lazy" className={isSpecific ? "absolute left-0 top-0 h-auto w-[200%] max-w-none transition duration-500 group-hover:scale-[1.03]" : "h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"} style={isSpecific ? { transform: cropTransforms[itemImage!.position] } : undefined} /></div>}
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-start justify-between gap-4">
           <h3 className="font-display text-2xl font-semibold leading-tight">{item.name}</h3>
@@ -48,16 +48,16 @@ function Cardapio() {
   return (
     <>
       <section className="relative overflow-hidden bg-primary py-20 text-primary-foreground">
-        <img src={banner} alt="Produtos da Pães e Vinhos" className="absolute inset-0 h-full w-full object-cover opacity-35" />
+        <img src={banner} alt="Pães artesanais da Varanda" className="absolute inset-0 h-full w-full object-cover opacity-35" />
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-primary/45" />
         <div className="relative mx-auto max-w-6xl px-5">
-          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-accent">Da primeira fornada à última pizza</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-accent">Do forno à sua mesa</p>
           <h1 className="mt-4 font-display text-5xl font-semibold md:text-6xl">Cardápio</h1>
-          <p className="mt-4 max-w-2xl text-primary-foreground/80">Preços, descrições e itens conforme o cardápio público disponibilizado pela empresa no Google.</p>
+          <p className="mt-4 max-w-2xl text-primary-foreground/80">Preços, descrições e itens conforme o cardápio público da Varanda disponibilizado no Goomer. Confirme disponibilidade antes do pedido.</p>
         </div>
       </section>
 
-      <div className="sticky top-[65px] z-30 border-b border-border bg-background/95 backdrop-blur">
+      <div className="sticky top-[81px] z-30 border-b border-border bg-background/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-4 lg:flex-row lg:items-center">
           <div className="flex gap-2 overflow-x-auto pb-1 lg:flex-1">
             <button onClick={() => setCategory("todos")} className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold ${category === "todos" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"}`}>Tudo</button>
@@ -81,11 +81,14 @@ function Cardapio() {
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{section.items.map((item) => <Item key={`${section.id}-${item.name}`} item={item} fallbackImage={section.categoryImage} itemImage={section.itemImages?.[item.name]} />)}</div>
           </section>
         ))}
-        {sections.length === 0 && <div className="rounded-xl border border-dashed border-border p-12 text-center text-muted-foreground">Nenhum item encontrado para “{search}”.</div>}
+        {sections.length === 0 && <div className="rounded-xl border border-dashed border-border p-12 text-center text-muted-foreground">Nenhum item encontrado para "{search}".</div>}
         <div className="rounded-2xl bg-primary p-8 text-center text-primary-foreground md:p-12">
-          <h2 className="font-display text-3xl font-semibold">Preços podem mudar</h2>
-          <p className="mx-auto mt-3 max-w-xl text-sm text-primary-foreground/75">Confirme disponibilidade, tamanhos e valores atuais diretamente com a padaria antes de fazer seu pedido.</p>
-          <a href={contato.telefoneLink} className="mt-6 inline-block rounded-full bg-accent px-6 py-3 font-semibold text-accent-foreground">Ligar para a Pães e Vinhos</a>
+          <h2 className="font-display text-3xl font-semibold">Preços e disponibilidade</h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-primary-foreground/75">Confirme disponibilidade, sabores da semana e valores atualizados diretamente com a Varanda antes de fazer seu pedido.</p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <a href={contato.telefoneLink} className="inline-block rounded-full bg-accent px-6 py-3 font-semibold text-accent-foreground">Ligar para a Varanda</a>
+            <a href={contato.cardapioOnline} target="_blank" rel="noopener noreferrer" className="inline-block rounded-full border border-white/30 px-6 py-3 font-semibold text-white">Ver cardápio no Goomer</a>
+          </div>
         </div>
       </main>
     </>

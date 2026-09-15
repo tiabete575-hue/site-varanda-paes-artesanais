@@ -15,10 +15,10 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
+    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur shadow-sm">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
         <Link to="/" className="transition-opacity hover:opacity-90">
-          <Logo variant="horizontal" size="sm" />
+          <Logo variant="horizontal" size="md" />
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -39,7 +39,7 @@ export function Header() {
             rel="noopener noreferrer"
             className="rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Falar no Instagram
+            Ver Cardápio Online
           </a>
         </nav>
 
@@ -74,7 +74,7 @@ export function Header() {
                 rel="noopener noreferrer"
                 className="text-sm uppercase tracking-[0.15em] text-primary"
               >
-                Falar no Instagram
+                Ver Cardápio Online
               </a>
             </li>
           </ul>

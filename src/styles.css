@@ -64,39 +64,70 @@
 }
 
 :root {
-  --radius: 0.35rem;
-  --background: oklch(0.975 0.013 82);
-  --foreground: oklch(0.25 0.025 50);
-  --card: oklch(0.992 0.007 82);
-  --card-foreground: oklch(0.25 0.025 50);
-  --popover: oklch(0.992 0.007 82);
-  --popover-foreground: oklch(0.25 0.025 50);
-  --primary: oklch(0.36 0.105 18);
-  --primary-foreground: oklch(0.98 0.012 82);
-  --secondary: oklch(0.925 0.025 76);
-  --secondary-foreground: oklch(0.31 0.055 27);
-  --muted: oklch(0.94 0.015 78);
-  --muted-foreground: oklch(0.47 0.03 50);
-  --accent: oklch(0.72 0.105 72);
-  --accent-foreground: oklch(0.25 0.025 50);
-  --destructive: oklch(0.55 0.2 27);
-  --destructive-foreground: oklch(0.98 0.01 85);
-  --border: oklch(0.86 0.025 70);
-  --input: oklch(0.86 0.025 70);
-  --ring: oklch(0.36 0.105 18);
-  --chart-1: oklch(0.52 0.13 44);
-  --chart-2: oklch(0.72 0.12 75);
-  --chart-3: oklch(0.45 0.06 130);
-  --chart-4: oklch(0.62 0.1 30);
-  --chart-5: oklch(0.35 0.04 50);
-  --sidebar: oklch(0.925 0.025 76);
-  --sidebar-foreground: oklch(0.25 0.025 50);
-  --sidebar-primary: oklch(0.36 0.105 18);
-  --sidebar-primary-foreground: oklch(0.98 0.012 82);
-  --sidebar-accent: oklch(0.88 0.035 70);
-  --sidebar-accent-foreground: oklch(0.25 0.025 50);
-  --sidebar-border: oklch(0.86 0.025 70);
-  --sidebar-ring: oklch(0.36 0.105 18);
+  --radius: 0.5rem;
+
+  /* ─── Varanda Pães Artesanais — Paleta oficial ──────────────────────────
+   *
+   *  Extraída das fotos da marca (sacola, fachada, placa interna):
+   *
+   *  PRIMARY  → Carvão escuro quase-preto  (#2B2B2B / #1E1F20)
+   *             Cor do texto/logo na sacola kraft e na placa branca.
+   *
+   *  ACCENT   → Azul-ardósia acinzentado   (#4A5568)
+   *             Cor das folhas decorativas na sacola.
+   *
+   *  BG       → Creme kraft               (#F7F3EE)
+   *             Fundo da sacola / papel do ambiente.
+   *
+   *  SECONDARY→ Bege-areia                (#EDE8E0)
+   *             Tom da caixa de papelão / elementos neutros.
+   * ─────────────────────────────────────────────────────────────────────── */
+
+  --background:              oklch(0.975 0.012 75);   /* creme kraft #F7F3EE  */
+  --foreground:              oklch(0.19 0.010 255);   /* carvão  #1E1F20      */
+
+  --card:                    oklch(0.990 0.008 75);   /* branco-creme         */
+  --card-foreground:         oklch(0.19 0.010 255);
+
+  --popover:                 oklch(0.990 0.008 75);
+  --popover-foreground:      oklch(0.19 0.010 255);
+
+  /* PRIMARY = carvão escuro da marca */
+  --primary:                 oklch(0.21 0.012 255);   /* ~#2B2B2F             */
+  --primary-foreground:      oklch(0.975 0.012 75);   /* creme sobre escuro   */
+
+  /* SECONDARY = bege-areia */
+  --secondary:               oklch(0.930 0.018 75);   /* #EDE8E0              */
+  --secondary-foreground:    oklch(0.25 0.012 255);
+
+  --muted:                   oklch(0.945 0.012 75);
+  --muted-foreground:        oklch(0.46 0.012 250);
+
+  /* ACCENT = azul-ardósia das folhas decorativas */
+  --accent:                  oklch(0.46 0.045 240);   /* slate-blue #4A5568   */
+  --accent-foreground:       oklch(0.975 0.012 75);   /* creme sobre accent   */
+
+  --destructive:             oklch(0.55 0.20 27);
+  --destructive-foreground:  oklch(0.98 0.01 85);
+
+  --border:                  oklch(0.875 0.016 72);
+  --input:                   oklch(0.875 0.016 72);
+  --ring:                    oklch(0.21 0.012 255);
+
+  --chart-1: oklch(0.42 0.06 250);
+  --chart-2: oklch(0.60 0.06 240);
+  --chart-3: oklch(0.45 0.04 130);
+  --chart-4: oklch(0.62 0.08 70);
+  --chart-5: oklch(0.35 0.03 50);
+
+  --sidebar:                    oklch(0.930 0.018 75);
+  --sidebar-foreground:         oklch(0.19 0.010 255);
+  --sidebar-primary:            oklch(0.21 0.012 255);
+  --sidebar-primary-foreground: oklch(0.975 0.012 75);
+  --sidebar-accent:             oklch(0.875 0.016 72);
+  --sidebar-accent-foreground:  oklch(0.19 0.010 255);
+  --sidebar-border:             oklch(0.875 0.016 72);
+  --sidebar-ring:               oklch(0.21 0.012 255);
 }
 
 .dark {
