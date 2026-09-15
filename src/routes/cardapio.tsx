@@ -13,10 +13,11 @@ export const Route = createFileRoute("/cardapio")({
   component: Cardapio,
 });
 
-function Item({ item }: { item: MenuItem }) {
+function Item({ item, fallbackImage }: { item: MenuItem; fallbackImage?: string | undefined }) {
+  const image = item.image ?? fallbackImage;
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-[0_12px_35px_-30px_oklch(0.25_0.05_20)] transition hover:-translate-y-1 hover:shadow-lg">
-      {item.image && <img src={item.image} alt={item.name} loading="lazy" className="h-48 w-full object-cover transition duration-500 group-hover:scale-[1.03]" />}
+      {image && <div className="relative overflow-hidden"><img src={image} alt={item.name} loading="lazy" className="h-48 w-full object-cover transition duration-500 group-hover:scale-[1.03]" />{!item.image && <span className="absolute bottom-2 right-2 rounded-full bg-black/60 px-2.5 py-1 text-[0.68rem] font-medium text-white backdrop-blur">Imagem ilustrativa</span>}</div>}
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-start justify-between gap-4">
           <h3 className="font-display text-2xl font-semibold leading-tight">{item.name}</h3>
@@ -69,7 +70,7 @@ function Cardapio() {
               <h2 className="font-display text-4xl font-semibold text-primary">{section.title}</h2>
               {section.intro && <p className="mt-2 text-sm text-muted-foreground">{section.intro}</p>}
             </div>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{section.items.map((item) => <Item key={`${section.id}-${item.name}`} item={item} />)}</div>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{section.items.map((item) => <Item key={`${section.id}-${item.name}`} item={item} fallbackImage={section.categoryImage} />)}</div>
           </section>
         ))}
         {sections.length === 0 && <div className="rounded-xl border border-dashed border-border p-12 text-center text-muted-foreground">Nenhum item encontrado para “{search}”.</div>}
